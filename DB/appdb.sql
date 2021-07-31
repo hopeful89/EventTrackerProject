@@ -16,20 +16,73 @@ CREATE SCHEMA IF NOT EXISTS `appdb` DEFAULT CHARACTER SET utf8 ;
 USE `appdb` ;
 
 -- -----------------------------------------------------
--- Table `Application`
+-- Table `user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Application` ;
+DROP TABLE IF EXISTS `user` ;
 
-CREATE TABLE IF NOT EXISTS `Application` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(500) NOT NULL,
+  `role` TINYINT NULL DEFAULT 0,
+  `enabled` TINYINT NULL DEFAULT 1,
   PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `application`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `application` ;
+
+CREATE TABLE IF NOT EXISTS `application` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `user_id` INT NOT NULL,
+  `status` VARCHAR(45) NULL,
+  `apply_date` DATE NULL,
+  `deadline` DATE NULL,
+  `link_to_job` VARCHAR(500) NULL,
+  `description` VARCHAR(1000) NULL,
+  `location` VARCHAR(500) NULL,
+  `salary` DECIMAL NULL,
+  `interview_date` DATE NULL,
+  `job_title` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_application_user_idx` (`user_id` ASC),
+  CONSTRAINT `fk_application_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `contact`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `contact` ;
+
+CREATE TABLE IF NOT EXISTS `contact` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NULL,
+  `email` VARCHAR(500) NOT NULL,
+  `last_name` VARCHAR(45) NULL,
+  `number` VARCHAR(45) NULL,
+  `application_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_contact_application1_idx` (`application_id` ASC),
+  CONSTRAINT `fk_contact_application1`
+    FOREIGN KEY (`application_id`)
+    REFERENCES `application` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 SET SQL_MODE = '';
 DROP USER IF EXISTS appuser@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-CREATE USER 'appuser'@'localhost';
+CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'appuser';
 
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'appuser'@'localhost';
 
@@ -38,11 +91,32 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- Data for table `Application`
+-- Data for table `user`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `appdb`;
-INSERT INTO `Application` (`id`, `name`) VALUES (1, 'Testapp');
+INSERT INTO `user` (`id`, `username`, `password`, `role`, `enabled`) VALUES (1, 'admin', 'password', 1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `application`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `appdb`;
+INSERT INTO `application` (`id`, `name`, `user_id`, `status`, `apply_date`, `deadline`, `link_to_job`, `description`, `location`, `salary`, `interview_date`, `job_title`) VALUES (1, 'Postman', 1, 'Applied', '2021-07-30', '2021-08-01', 'https://www.google.com', 'sweet', 'anyway', 120000, '2021-08-09', 'Developer');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `contact`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `appdb`;
+INSERT INTO `contact` (`id`, `first_name`, `email`, `last_name`, `number`, `application_id`) VALUES (1, 'Brandon', 'bstine@gams.com', 'Stine', '8675309', 1);
+INSERT INTO `contact` (`id`, `first_name`, `email`, `last_name`, `number`, `application_id`) VALUES (2, 'Tim', 'Hartaway@hat.com', 'Hartaway', '293817274', 1);
 
 COMMIT;
 

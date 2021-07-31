@@ -31,6 +31,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `status`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `status` ;
+
+CREATE TABLE IF NOT EXISTS `status` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `application`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `application` ;
@@ -39,7 +51,6 @@ CREATE TABLE IF NOT EXISTS `application` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `user_id` INT NOT NULL,
-  `status` VARCHAR(45) NULL,
   `apply_date` DATE NULL,
   `deadline` DATE NULL,
   `link_to_job` VARCHAR(500) NULL,
@@ -48,11 +59,18 @@ CREATE TABLE IF NOT EXISTS `application` (
   `salary` DECIMAL NULL,
   `interview_date` DATE NULL,
   `job_title` VARCHAR(45) NULL,
+  `status_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_application_user_idx` (`user_id` ASC),
+  INDEX `fk_application_status1_idx` (`status_id` ASC),
   CONSTRAINT `fk_application_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_application_status1`
+    FOREIGN KEY (`status_id`)
+    REFERENCES `status` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -101,11 +119,25 @@ COMMIT;
 
 
 -- -----------------------------------------------------
+-- Data for table `status`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `appdb`;
+INSERT INTO `status` (`id`, `name`) VALUES (1, 'Not Started');
+INSERT INTO `status` (`id`, `name`) VALUES (2, 'Applied');
+INSERT INTO `status` (`id`, `name`) VALUES (3, 'Rejected');
+INSERT INTO `status` (`id`, `name`) VALUES (4, 'Offer');
+INSERT INTO `status` (`id`, `name`) VALUES (5, 'Accepted');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `application`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `appdb`;
-INSERT INTO `application` (`id`, `name`, `user_id`, `status`, `apply_date`, `deadline`, `link_to_job`, `description`, `location`, `salary`, `interview_date`, `job_title`) VALUES (1, 'Postman', 1, 'Applied', '2021-07-30', '2021-08-01', 'https://www.google.com', 'sweet', 'anyway', 120000, '2021-08-09', 'Developer');
+INSERT INTO `application` (`id`, `name`, `user_id`, `apply_date`, `deadline`, `link_to_job`, `description`, `location`, `salary`, `interview_date`, `job_title`, `status_id`) VALUES (1, 'Postman', 1, '2021-07-30', '2021-08-01', 'https://www.google.com', 'sweet', 'anyway', 120000, '2021-08-09', 'Developer', 1);
 
 COMMIT;
 

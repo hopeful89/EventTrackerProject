@@ -5,6 +5,9 @@
     </provider>
     <!-- List entities here -->
     <class>com.skilldistillery.application.entities.Application</class>
+    <class>com.skilldistillery.application.entities.Contact</class>
+    <class>com.skilldistillery.application.entities.Status</class>
+    <class>com.skilldistillery.application.entities.User</class>
 
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <!-- End entities here -->

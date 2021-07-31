@@ -13,10 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ApplicationTest {
+class StatusTest {
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Application app;
+	private Status status;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,39 +31,20 @@ class ApplicationTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		app = em.find(Application.class, 1);
+		status = em.find(Status.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		app = null;
+		status = null;
 		em.close();
 	}
 
 	@Test
-	@DisplayName("Application entity")
+	@DisplayName("Status mappedByApplication")
 	void test() {
-		assertNotNull(app);
-		assertEquals("Postman", app.getName());
-	}
-	
-	@Test
-	@DisplayName("Application to status mapping")
-	void test1() {
-		assertNotNull(app);
-		assertEquals("Not Started", app.getStatus().getName());
+		assertNotNull(status);
+		assertTrue(status.getApplications().size() > 0);
 	}
 
-	@Test
-	@DisplayName("Application to user mapping")
-	void test2() {
-		assertNotNull(app);
-		assertEquals("admin", app.getUser().getUsername());
-	}
-	@Test
-	@DisplayName("Application to Contact mapping")
-	void test3() {
-		assertNotNull(app);
-		assertTrue(app.getContacts().size() > 0);
-	}
 }

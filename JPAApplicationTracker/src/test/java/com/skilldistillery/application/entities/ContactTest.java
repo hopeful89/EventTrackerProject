@@ -13,10 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ApplicationTest {
+class ContactTest {
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Application app;
+	private Contact contact;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,39 +31,29 @@ class ApplicationTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		app = em.find(Application.class, 1);
+		contact = em.find(Contact.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		app = null;
+		contact = null;
 		em.close();
 	}
 
 	@Test
-	@DisplayName("Application entity")
+	@DisplayName("Contact entity")
 	void test() {
-		assertNotNull(app);
-		assertEquals("Postman", app.getName());
+		assertNotNull(contact);
+		assertEquals("Brandon", contact.getFirstName());
 	}
 	
 	@Test
-	@DisplayName("Application to status mapping")
-	void test1() {
-		assertNotNull(app);
-		assertEquals("Not Started", app.getStatus().getName());
-	}
-
-	@Test
-	@DisplayName("Application to user mapping")
+	@DisplayName("Contact to Application entity")
 	void test2() {
-		assertNotNull(app);
-		assertEquals("admin", app.getUser().getUsername());
+		assertNotNull(contact);
+		assertEquals("Postman", contact.getApplication().getName());
 	}
-	@Test
-	@DisplayName("Application to Contact mapping")
-	void test3() {
-		assertNotNull(app);
-		assertTrue(app.getContacts().size() > 0);
-	}
+	
+	
+
 }

@@ -1,6 +1,7 @@
 package com.skilldistillery.application.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class ApplicationServiceImpl implements ApplicationService{
 	@Override
 	public Application createNewApplication(Application app, int userId) {
 		if(app.getStatus() == null) {
-			app.setStatus(statusRepo.getById(2));
+			app.setStatus(statusRepo.getById(1));
 		}
 		try {
 			User user = userRepo.getById(userId);
@@ -51,6 +52,38 @@ public class ApplicationServiceImpl implements ApplicationService{
 	public Application findApplicationByUserAndAppId(int appId, int userId) {
 		Application app = appRepo.findByIdAndUser_id(appId, userId);
 		return app;
+	}
+
+	@Override
+	public Application updateApplication(int userId, Application application) {
+		Optional<User> user = userRepo.findById(userId);
+		if(application.getStatus() == null) {
+			application.setStatus(statusRepo.getById(1));
+		}
+		if(user.isPresent() && user.get().getApplications().contains(application)) {
+			if(application.getUser() == null) {
+				application.setUser(user.get());
+			}
+			appRepo.saveAndFlush(application);
+			return application;
+		}
+		
+		return null;
+	}
+
+	@Override
+	public boolean deleteApplication(int userId, int appId) {
+		Optional<User> user = userRepo.findById(userId);
+		Optional<Application> app = appRepo.findById(appId);
+		if(user.isPresent() && app.isPresent()) {
+			if(user.get().getApplications().contains(app.get())) {
+				app.get().setUser(null);
+				app.get().setStatus(null);
+				appRepo.delete(app.get());
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	

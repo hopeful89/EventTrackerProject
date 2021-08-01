@@ -114,6 +114,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 START TRANSACTION;
 USE `appdb`;
 INSERT INTO `user` (`id`, `username`, `password`, `role`, `enabled`) VALUES (1, 'admin', 'password', 1, 1);
+INSERT INTO `user` (`id`, `username`, `password`, `role`, `enabled`) VALUES (2, 'badboy75', 'password', 0, 1);
+INSERT INTO `user` (`id`, `username`, `password`, `role`, `enabled`) VALUES (3, 'theOnetrueking32', 'password', 0, 1);
 
 COMMIT;
 

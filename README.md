@@ -18,9 +18,9 @@
 | POST   | `/api/user/{userID}/applications`| `"name":"Post","applyDate":"2021-07-30","deadline":"2021-08-01","linkToJob":"https://www.google.com","description":"asdfsdfsdfsdfsdfsdf","location":"anyway","salary":120000.0,"interviewDate":"2021-08-09","jobTitle":"Developer","status"`<br>the only required is name| `Application`| Create new application for user |
 | GET    | `/api/user/{userID}/applications`      |              | `List<Application>`| All applications by user |
 | GET    | `/api/user/{userID}/applications/{appId}`|   | `Application`| Single application by user and application id|
-| PUT    | `/api/user/{userID}/applications/{appId}`| `minimum` "name": "notnull" | `Application`| Update application by id for user|
+| PUT    | `/api/user/{userID}/applications`| `{"id":1,"name":"Postmana","applyDate":"2021-07-30","deadline":"2021-08-01","linkToJob":"https://www.google.com","description":"sweet","location":"anyway","salary":120000.0,"interviewDate":"2021-08-09","jobTitle":"Developer"}`<br>Can also take a status.  If not set it defaults to not started| `Application`| Update application for user|
 | DEL    | `/api/user/{userID}/applications/{appId}` | | `void`| delete user application |
-| GET    | `/api/application/{appId}/contact` ||`List<Contact>`| Show contacts for an application by id |
-| POST   | `/api/application/{appId}/contact` |`minimum`<br> email|`Contact`| Create new contact for application by id |
-| PUT    | `/api/application/{appId}/contact/{contactId}` |`minimum`<br>email|`Contact` | Update existing contact on application by id|
-| DEL    | `/api/application/{appId}/contact/{contactId}` | | `void`| Delete contact from application|
+| GET    | `/api/applications/{appId}/contact` ||`List<Contact>`| Show contacts for an application by id |
+| POST   | `/api/applications/{appId}/contact` |`minimum`<br> email|`Contact`| Create new contact for application by id |
+| PUT    | `/api/applications/{appId}/contact/{contactId}` |`minimum`<br>email<br>`{"id":1,"firstName":"Brandon","email":"bstine@gams.com","lastName":"Stine","phoneNumber":"8675309"}`|`Contact` | Update existing contact on application by id|
+| DEL    | `/api/applications/{appId}/contact/{contactId}` | | `void`| Delete contact from application|

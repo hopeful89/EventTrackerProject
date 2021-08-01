@@ -10,4 +10,6 @@ public interface ApplicationService {
 	Application createNewApplication(Application app, int userId);
 	List<Application> findAllApplicationsByUserId(int userId);
 	Application findApplicationByUserAndAppId(int appId, int userId);
+	Application updateApplication(int userId, Application app);
+	boolean deleteApplication(int userId, int appId);
 }

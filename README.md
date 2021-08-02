@@ -14,7 +14,7 @@ This REST API is a program the does CRUD operations on applications, users, and 
 |--------|--------------------|--------------|---------------|-----------------|
 | GET    |  `api/user`        |              | `List<User>`  | shows all users |
 | POST   | `api/user` | `{`<br>`"username":"superboy89",`<br>`"password":"password"`<br>`}` | `User`<br>`400` bad input<br>`403`duplicate username| Create a user   |
-| PUT    |  `api/user/` | `{`<br>`"id":6,`<br>`"username":"superboy89",`<br>`"password":"paasdfsad",`<br>`"role":"false",`<br>`"enabled":"false"`<br>`}` | `User` | Update user by id|
+| PUT    |  `api/user/` | `{`<br>`"id":1,`<br>`"username":"superboy89",`<br>`"password":"paasdfsad",`<br>`"role":"false",`<br>`"enabled":"false"`<br>`}` | `User` | Update user by id|
 | POST   | `/api/user/{userID}/applications`| `{`<br>`"name":"Postmana",`<br>`"applyDate":"2021-07-30",`<br>`"deadline":"2021-08-01",`<br>`"linkToJob":"https://www.google.com",`<br>`"description":"sweet",`<br>`"location":"anyway",`<br>`"salary":120000.0,`<br>`"interviewDate":"2021-08-09",`<br>`"jobTitle":"Developer"`<br>`}`<br>the only required is name| `Application`| Create new application for user |
 | GET    | `/api/user/{userID}/applications`      |              | `List<Application>`| All applications by user |
 | GET    | `/api/user/{userID}/applications/{appId}`|   | `Application`| Single application by user and application id|

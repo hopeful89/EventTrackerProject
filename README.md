@@ -7,6 +7,8 @@
 * IMPORTANT: No auth/security is used. Please do not use real information. The information will not be secure.<br>
 This REST API is a program the does CRUD operations on applications, users, and contacts using a MySQL database and connecting with Spring Data JPA.
 
+This is hosted at http://3.139.183.62:8080/JobApplicationTracker/
+
 ## REST Endpoints
 
 

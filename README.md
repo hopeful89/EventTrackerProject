@@ -26,7 +26,7 @@ This REST API is a program the does CRUD operations on applications, users, and 
 | DEL    | `/api/applications/{appId}/contact/{contactId}` | | `void`| Delete contact from application|
 
 ### Technologies used
-* Java, Java Persistence API, REST API, Spring Boot, Gradle, MySQL Workbench, Postman, JSON, Apache, Tomcat
+* Java, Java Persistence API, REST API, Spring Boot, Gradle, MySQL Workbench, Postman, JSON, Tomcat
 
 ### Lessons learned
 

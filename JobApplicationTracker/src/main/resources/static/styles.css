@@ -1,0 +1,13 @@
+
+.introApp {
+	width: 90vw;
+
+}
+
+body {
+	background-color: rgb(203, 244, 223);
+}
+
+.table-row {
+	cursor: pointer;
+}

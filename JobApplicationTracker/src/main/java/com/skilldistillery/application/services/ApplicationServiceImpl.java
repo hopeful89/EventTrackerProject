@@ -30,9 +30,9 @@ public class ApplicationServiceImpl implements ApplicationService{
 
 	@Override
 	public Application createNewApplication(Application app, int userId) {
-		if(app.getStatus() == null) {
-			app.setStatus(statusRepo.getById(1));
-		}
+		
+		app.setStatus(statusRepo.getById(app.getStatus().getId()));
+		
 		try {
 			User user = userRepo.getById(userId);
 			app.setUser(user);

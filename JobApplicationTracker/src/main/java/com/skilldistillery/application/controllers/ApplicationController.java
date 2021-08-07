@@ -32,6 +32,7 @@ public class ApplicationController {
 	
 	@PostMapping("user/{userID}/applications")
 	public Application createNewUserApplication(@RequestBody Application app, @PathVariable int userID, HttpServletResponse res, HttpServletRequest req) {
+
 		Application newApp = appSvc.createNewApplication(app, userID);
 		if(newApp == null) {
 			res.setStatus(400);

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Job Application Tracker</title>
+  <script type="text/javascript" src="js/script.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <nav><button id="homeBtn" class="btn">Home</button></nav>
+  <div class="contentDiv">
+    <div id="singleAppView" class="d-none">
+      <div class="row">
+        <div class="col-md"></div>
+        <div class="col-md"></div>
+      </div>
+      <div class="row">
+        <form name="editJob">
+          <input type="hidden" name="userID">
+          <input type="hidden" name="id">
+          <label for="name">Company Name</label>
+          <input type="text" name="name" class="form-control" />
+          <label for="jobTitle">Title</label>
+          <input type="text" name="jobTitle" class="form-control" />
+          <label for="status">Status</label>
+          <select name="status" class="form-control">
+            <option value="1">Not Started</option>
+            <option value="2">Applied</option>
+            <option value="3">Rejected</option>
+            <option value="4">Offer</option>
+            <option value="5">Accepted</option>
+          </select>
+          <label for="applyDate">Apply Date</label>
+          <input type="date" name="applyDate" class="form-control" />
+          <label for="deadline">Deadline</label>
+          <input type="date" name="deadline" class="form-control" />
+          <label for="interviewDate">Interview Date</label>
+          <input type="date" name="interviewDate" class="form-control" />
+          <label for="description">Description</label>
+          <input type="text" name="description" class="form-control" />
+          <label for="linkToJob">Link to Job</label>
+          <input type="text" name="linkToJob" class="form-control" />
+          <label for="location">Location</label>
+          <input type="text" name="location" class="form-control" />
+          <label for="salary">Salary</label>
+          <input type="number" min="1" value="0" name="salary" class="form-control" />
+          <input type="submit" name="submit" />
+        </form>
+      </div>
+    </div>
+        <div class="createJobDiv w-50 mx-auto">
+          <form name="createJob">
+            <label for="name">Company Name</label>
+            <input type="text" name="name" class="form-control" />
+            <label for="jobTitle">Title</label>
+            <input type="text" name="jobTitle" class="form-control" />
+            <label for="status">Status</label>
+            <select name="status" class="form-control">
+              <option value="1">Not Started</option>
+              <option value="2">Applied</option>
+              <option value="3">Rejected</option>
+              <option value="4">Offer</option>
+              <option value="5">Accepted</option>
+            </select>
+            <label for="applyDate">Apply Date</label>
+            <input type="date" name="applyDate" class="form-control" />
+            <label for="deadline">Deadline</label>
+            <input type="date" name="deadline" class="form-control" />
+            <label for="description">Description</label>
+            <input type="text" name="description" class="form-control" />
+            <label for="linkToJob">Link to Job</label>
+            <input type="text" name="linkToJob" class="form-control" />
+            <label for="location">Location</label>
+            <input type="text" name="location" class="form-control" />
+            <label for="salary">Salary</label>
+            <input type="number" min="1" value="0" name="salary" class="form-control" />
+            <input type="submit" name="submit" />
+          </form>
+        </div>
+        <div class="introApp mx-auto">
+          <table class="table mx-auto">
+            <thead>
+              <th scope="col">App name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Apply Date</th>
+              <th scope="col">Deadline</th>
+              <th scope="col">Job Title</th>
+              <th scope="col">Interview Date</th>
+            </thead>
+            <tbody class="table-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

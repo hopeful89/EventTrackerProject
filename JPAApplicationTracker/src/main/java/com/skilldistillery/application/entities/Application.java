@@ -42,7 +42,7 @@ public class Application {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	@JsonIgnore
+
 	@OneToMany(mappedBy="application")
 	private List<Contact> contacts;
 
@@ -93,16 +93,16 @@ public class Application {
 		return applyDate;
 	}
 
-	public void setApplyDate(LocalDate applyDate) {
-		this.applyDate = applyDate;
+	public void setApplyDate(String applyDate) {
+		this.applyDate = LocalDate.parse(applyDate);
 	}
 
 	public LocalDate getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(LocalDate deadline) {
-		this.deadline = deadline;
+	public void setDeadline(String deadline) {
+		this.deadline = LocalDate.parse(deadline);
 	}
 
 	public String getLinkToJob() {
@@ -141,8 +141,8 @@ public class Application {
 		return interviewDate;
 	}
 
-	public void setInterviewDate(LocalDate interviewDate) {
-		this.interviewDate = interviewDate;
+	public void setInterviewDate(String interviewDate) {
+		this.interviewDate = LocalDate.parse(interviewDate);
 	}
 
 	public String getJobTitle() {

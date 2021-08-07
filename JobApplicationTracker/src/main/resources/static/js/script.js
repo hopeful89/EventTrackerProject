@@ -140,60 +140,203 @@ function createJob(e){
 }
 
 function displaySingleApp(application){
+	document.getElementById('deleteBtn').replaceWith(document.getElementById('deleteBtn').cloneNode(true));
 	singleAppView.classList.remove('d-none');
-	document.editJob.submit.removeEventListener('click', updateSubmit);
 	updateEditForm(application);
-
+	document.getElementById('deleteBtn').addEventListener('click', deleteBtn);
+	function deleteBtn(e){
+		console.log(e);
+		deleteApplication(application);
+	}
+	buildSingleAppView(application);
 }
 
 function updateEditForm(application) {
-
+	
 	let form = document.editJob;
 	form.userID.value = application.user.id;
 	form.id.value = application.id;
 	form.name.value = application.name;
-	form.deadline.value = application.deadline;
-	form.description.value = application.description
-	form.interviewDate.value = application.interviewDate;
+	if(application.applyDate){
+		form.applyDate.value = application.applyDate;
+	}
+	if(application.deadline){
+		form.deadline.value = application.deadline;
+	}
+	if(application.interviewDate){
+		form.interviewDate.value = application.interviewDate;
+	}
+	form.description.value = application.description;
 	form.linkToJob.value = application.linkToJob;
 	form.jobTitle.value = application.jobTitle;
 	form.location.value = application.location;
 	form.salary.value = application.salary;
 	form.status.value = application.status.id;
-	form.submit.addEventListener('click', updateSubmit);
+	form.submit.replaceWith(form.submit.cloneNode(true));
+	form.submit.addEventListener('click', grabSingleApp);
 	
-	
+	function grabSingleApp(e){
+		e.preventDefault();
+		updateSubmit(application);
+	}
 }
-function updateSubmit(e){
-	e.preventDefault();
-	let xhr = new XMLHttpRequest();	
+
+function updateSubmit(app){
+
+	let xhr = new XMLHttpRequest();
 	let form = document.editJob;
-	let application = {
-		id: form.id.value,
-		name: form.name.value,
-		jobTitle: form.jobTitle.value,
-		applyDate: form.applyDate.value,
-		deadline: form.deadline.value,
-		description: form.description.value,
-		interviewDate: form.interviewDate.value,
-		linkToJob: form.linkToJob.value,
-		location: form.location.value,
-		salary: form.salary.value,
-		status: {
-			name: "",
-			id: form.status.value
+	
+	app.id = form.id.value;
+	app.name = form.name.value;
+	app.jobTitle = form.jobTitle.value;
+	app.applyDate = form.applyDate.value;
+	app.deadline = form.deadline.value;
+	app.description = form.description.value;
+	app.interviewDate = form.interviewDate.value;
+	app.linkToJob = form.linkToJob.value;
+	app.location = form.location.value;
+	app.salary = form.salary.value;
+	app.status = {
+		name: '',
+		id: form.status.value
+	};
+		for(p in app){
+		if(app[p] === "" || !app[p]){
+			delete app[p];
 		}
 	}
-	let updateString = `user/${form.userID.value}/applications`;
-	console.log(updateString);
-	console.log(application);
+	let updateString = `api/user/${form.userID.value}/applications`;
+
 	xhr.open('PUT', updateString)
+	xhr.setRequestHeader("Content-type", "application/json");
 	xhr.onreadystatechange = () => {
 		if(xhr.readyState === 4){
 			if(xhr.status === 200){
-				console.log(xhr.responseText);
+				displaySingleApp(app);
 			}
 		}
 	}
-	console.log(application);
+	xhr.send(JSON.stringify(app));
 }
+
+
+function deleteApplication(app){
+	let xhr = new XMLHttpRequest();
+	xhr.open('DELETE', `api/user/${app.user.id}/applications/${app.id}`);
+		xhr.onreadystatechange = () => {
+		if(xhr.readyState === 4){
+			if(xhr.status === 204){
+				loadApplication();
+			}
+		}
+	}
+	xhr.send();
+}
+
+function buildSingleAppView(app){
+	let ul = document.getElementById('contacts');
+	ul.textContent = '';
+	document.getElementById("spvCompany").textContent = app.name;
+	document.getElementById("spvTitle").textContent = app.jobTitle;
+	document.getElementById("spvStatus").textContent = app.Status;
+	document.getElementById("spvAppDate").textContent = app.applyDate;
+	document.getElementById("spvDeadline").textContent = app.deadline;
+	document.getElementById("spvInterviewDate").textContent = app.interviewDate;
+	document.getElementById("spvDescription").textContent = app.description;
+	document.getElementById("spvJobLink").setAttribute("href", app.linkToJob);
+	document.getElementById("spvLocation").textContent = app.location;
+	document.getElementById("spvSalary").textContent = app.salary;
+	document.contact.appId.value = app.id;
+	console.log(app.contacts)
+	
+	for(contact of app.contacts){
+		let form = document.contact;
+		let li = document.createElement('li');
+		let infoDiv = document.createElement('div');
+		let infoEmail = document.createElement('p');
+		let infoPhone = document.createElement('p');
+		ul.appendChild(li);
+		li.textContent = `${contact.firstName} ${contact.lastName}`;
+		li.appendChild(infoDiv);
+		infoDiv.appendChild(infoEmail);
+		infoDiv.appendChild(infoPhone);
+		infoEmail.textContent = `${contact.email}`;
+		if(contact.phoneNumber){
+		infoPhone.textContent = `Phone: ${contact.phoneNumber}`;
+		}
+		li.classList.add('table-row');
+		onClick();
+		console.log(contact);
+		function onClick(){
+			addContactListener(contact, li, form)
+		}
+		
+		}
+		function addContactListener(contact, item, form){
+			item.addEventListener('click', e => {
+				form.contactId.value = contact.id;
+				form.firstName.value = contact.firstName;
+				form.lastName.value = contact.lastName;
+				form.email.value = contact.email;
+				form.phoneNumber.value = contact.phoneNumber;
+			})
+		}
+
+	document.contact.submit.replaceWith(document.contact.submit.cloneNode(true));
+	document.contact.submit.addEventListener('click', createContact)
+	function createContact(e){
+		e.preventDefault();
+		contactForm(app);
+	}
+	}
+	
+
+
+
+function contactForm(app){
+	let xhr = new XMLHttpRequest();
+	let form = document.contact;
+	console.log(form.contactId.value)
+	if(form.contactId.value){
+		xhr.open('PUT', `api/applications/${form.appId.value}/contact`);
+	}else{
+		xhr.open('POST', `api/applications/${form.appId.value}/contact`);
+	}
+	xhr.setRequestHeader("Content-type", "application/json");
+	let contact = {
+		id: form.contactId.value ? form.contactId.value : 0,
+		firstName: form.firstName.value ? form.firstName.value : "Joe",
+		lastName: form.lastName.value ? form.lastName.value : "Smith",
+		email: form.email.value ? form.email.value : "setemail@setemail.com",
+		phoneNumber: form.phoneNumber.value
+	}
+	
+	xhr.onreadystatechange = () => {
+		if(xhr.readyState === 4){
+			if(xhr.status === 201){
+				app.contacts = [...app.contacts, JSON.parse(xhr.responseText)]
+				displaySingleApp(app);
+			}else if(xhr.status === 200){
+				for(contact in app.contacts){
+					if(contact = JSON.parse(xhr.responseText)){
+						console.log("the same");
+					}
+				}
+			}
+			
+		}
+	}
+	
+	for(p in contact){
+		if(!contact[p]){
+			delete contact[p];
+		}
+	}
+	
+	xhr.send(JSON.stringify(contact));
+}
+
+
+
+
+

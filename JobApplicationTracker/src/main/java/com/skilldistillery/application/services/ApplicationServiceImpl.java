@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.application.entities.Application;
-import com.skilldistillery.application.entities.Status;
+import com.skilldistillery.application.entities.Contact;
 import com.skilldistillery.application.entities.User;
 import com.skilldistillery.application.repositories.ApplicationRepository;
+import com.skilldistillery.application.repositories.ContactRepository;
 import com.skilldistillery.application.repositories.StatusRepository;
 import com.skilldistillery.application.repositories.UserRepository;
 
@@ -22,6 +23,8 @@ public class ApplicationServiceImpl implements ApplicationService{
 	UserRepository userRepo;
 	@Autowired
 	StatusRepository statusRepo;
+	@Autowired
+	ContactRepository contactRepo;
 
 	@Override
 	public List<Application> allApplications() {
@@ -77,6 +80,9 @@ public class ApplicationServiceImpl implements ApplicationService{
 		Optional<Application> app = appRepo.findById(appId);
 		if(user.isPresent() && app.isPresent()) {
 			if(user.get().getApplications().contains(app.get())) {
+				for(Contact contact : app.get().getContacts()) {
+					contactRepo.delete(contact);
+				}
 				app.get().setUser(null);
 				app.get().setStatus(null);
 				appRepo.delete(app.get());

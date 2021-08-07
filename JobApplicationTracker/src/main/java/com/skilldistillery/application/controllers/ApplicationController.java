@@ -61,8 +61,7 @@ public class ApplicationController {
 	}
 	
 	@PutMapping("user/{userId}/applications")
-	public Application showSingleApplication(@PathVariable int userId, @RequestBody Application app, HttpServletResponse res){
-
+	public Application updateApplication(@PathVariable int userId, @RequestBody Application app, HttpServletResponse res){
 		Application application = appSvc.updateApplication(userId, app);
 		if(app == null) {
 			res.setStatus(400);

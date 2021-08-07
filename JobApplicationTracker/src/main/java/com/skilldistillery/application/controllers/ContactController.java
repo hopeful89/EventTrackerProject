@@ -52,10 +52,10 @@ public class ContactController {
 		return contact;
 	}
 	
-	@PutMapping("applications/{appId}/contact/")
-	public Contact updateContactWithAppId(@RequestBody Contact contact, @PathVariable int appId,  HttpServletResponse res) {
-		System.out.println("made it here");
+	@PutMapping("applications/{appId}/contact")
+	public Contact updateContactWithAppId(@PathVariable int appId, @RequestBody Contact contact,  HttpServletResponse res) {
 		Contact newContact;
+
 		try {
 			newContact = contactSvc.updateContact(contact, appId);
 			if(newContact == null) {

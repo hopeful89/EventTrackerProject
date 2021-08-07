@@ -247,7 +247,7 @@ function buildSingleAppView(app){
 	document.getElementById("spvLocation").textContent = app.location;
 	document.getElementById("spvSalary").textContent = app.salary;
 	document.contact.appId.value = app.id;
-	console.log(app.contacts)
+
 	
 	for(contact of app.contacts){
 		let form = document.contact;
@@ -266,7 +266,6 @@ function buildSingleAppView(app){
 		}
 		li.classList.add('table-row');
 		onClick();
-		console.log(contact);
 		function onClick(){
 			addContactListener(contact, li, form)
 		}
@@ -296,13 +295,9 @@ function buildSingleAppView(app){
 function contactForm(app){
 	let xhr = new XMLHttpRequest();
 	let form = document.contact;
-	console.log(form.contactId.value)
-	if(form.contactId.value){
-		xhr.open('PUT', `api/applications/${form.appId.value}/contact`);
-	}else{
-		xhr.open('POST', `api/applications/${form.appId.value}/contact`);
-	}
-	xhr.setRequestHeader("Content-type", "application/json");
+	
+
+	
 	let contact = {
 		id: form.contactId.value ? form.contactId.value : 0,
 		firstName: form.firstName.value ? form.firstName.value : "Joe",
@@ -310,29 +305,48 @@ function contactForm(app){
 		email: form.email.value ? form.email.value : "setemail@setemail.com",
 		phoneNumber: form.phoneNumber.value
 	}
+	if(contact.id != 0 ){
+		xhr.open('PUT', `api/applications/${form.appId.value}/contact`);
+	}else{
+		xhr.open('POST', `api/applications/${form.appId.value}/contact`);
+	}
 	
 	xhr.onreadystatechange = () => {
 		if(xhr.readyState === 4){
 			if(xhr.status === 201){
+				form.reset();
+				console.log(form.contactId.value);
 				app.contacts = [...app.contacts, JSON.parse(xhr.responseText)]
 				displaySingleApp(app);
+
 			}else if(xhr.status === 200){
-				for(contact in app.contacts){
-					if(contact = JSON.parse(xhr.responseText)){
-						console.log("the same");
-					}
-				}
+				form.reset();
+				form.contactId.value = 0;
+				let updateContact = JSON.parse(xhr.responseText);
+				app.contacts = app.contacts.map(contact => {
+					if(updateContact.id === contact.id){
+						contact = updateContact;
+						return contact;
+					}else{
+						return contact;
+					}           
+				})
+				console.log(form.contactId.value);
+				displaySingleApp(app);
+			}else{
+				console.log(xhr.responseText)
 			}
-			
 		}
+		
 	}
+	
 	
 	for(p in contact){
 		if(!contact[p]){
 			delete contact[p];
 		}
 	}
-	
+	xhr.setRequestHeader("Content-type", "application/json");
 	xhr.send(JSON.stringify(contact));
 }
 

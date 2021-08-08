@@ -71,7 +71,7 @@ function displayAllApplications(applications){
 			tableBody.appendChild(deadlineTD);
 			tableBody.appendChild(jobTitleTD);
 			tableBody.appendChild(interviewTD);
-			
+			document.getElementById('totalApps').textContent = `Total apps on platform: ${applications.length}`
 			appNameTH.addEventListener('click', tableOnClick);
 			statusTD.addEventListener('click', tableOnClick);
 			applyDateTD.addEventListener('click', tableOnClick);
@@ -103,7 +103,6 @@ function createJob(e){
 	e.preventDefault();
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', 'api/user/1/applications');
-	console.log("xhr open", xhr);
 	let form = document.createJob;
 	xhr.setRequestHeader("Content-type", "application/json");
 	let application = {
@@ -128,10 +127,10 @@ function createJob(e){
 	xhr.onreadystatechange = () => {
 		if(xhr.readyState === 4){
 			if(xhr.status === 201){
+				form.reset();
 				loadApplication();
 			}else{
-				console.log(xhr.status)
-				console.log(xhr.responseText);
+				//TODO
 			}
 		}
 	}
@@ -145,7 +144,6 @@ function displaySingleApp(application){
 	updateEditForm(application);
 	document.getElementById('deleteBtn').addEventListener('click', deleteBtn);
 	function deleteBtn(e){
-		console.log(e);
 		deleteApplication(application);
 	}
 	buildSingleAppView(application);
@@ -247,7 +245,13 @@ function buildSingleAppView(app){
 	document.getElementById("spvLocation").textContent = app.location;
 	document.getElementById("spvSalary").textContent = app.salary;
 	document.contact.appId.value = app.id;
-
+	document.getElementById('contactDelete').replaceWith(document.getElementById('contactDelete').cloneNode(true));
+	document.getElementById('contactDelete').addEventListener('click', deleteContact);
+	function deleteContact(e){
+		e.preventDefault();
+		deleteContactFromApp(app);
+	}
+	
 	
 	for(contact of app.contacts){
 		let form = document.contact;
@@ -278,6 +282,7 @@ function buildSingleAppView(app){
 				form.lastName.value = contact.lastName;
 				form.email.value = contact.email;
 				form.phoneNumber.value = contact.phoneNumber;
+				contactDelete.classList.remove('disabled');
 			})
 		}
 
@@ -296,8 +301,6 @@ function contactForm(app){
 	let xhr = new XMLHttpRequest();
 	let form = document.contact;
 	
-
-	
 	let contact = {
 		id: form.contactId.value ? form.contactId.value : 0,
 		firstName: form.firstName.value ? form.firstName.value : "Joe",
@@ -315,11 +318,11 @@ function contactForm(app){
 		if(xhr.readyState === 4){
 			if(xhr.status === 201){
 				form.reset();
-				console.log(form.contactId.value);
 				app.contacts = [...app.contacts, JSON.parse(xhr.responseText)]
 				displaySingleApp(app);
 
 			}else if(xhr.status === 200){
+				document.getElementById('contactDelete').classList.add('disabled');
 				form.reset();
 				form.contactId.value = 0;
 				let updateContact = JSON.parse(xhr.responseText);
@@ -331,10 +334,9 @@ function contactForm(app){
 						return contact;
 					}           
 				})
-				console.log(form.contactId.value);
 				displaySingleApp(app);
 			}else{
-				console.log(xhr.responseText)
+				//TODO
 			}
 		}
 		
@@ -350,6 +352,24 @@ function contactForm(app){
 	xhr.send(JSON.stringify(contact));
 }
 
+function deleteContactFromApp(app){
+	let xhr = new XMLHttpRequest();
+	let form = document.contact;
+	xhr.open('DELETE', `api/applications/${app.id}/contact/${form.contactId.value}`);
+	
+	xhr.onreadystatechange = () => {
+		if(xhr.readyState === 4 && xhr.status === 204){
+			form.reset();
+			
+			document.getElementById('contactDelete').classList.add('disabled');
+			app.contacts = app.contacts.filter(contact => contact.id != form.contactId.value);
+			form.contactId.value = 0;
+			displaySingleApp(app);
+		}
+	}
+	
+	xhr.send();
+}
 
 
 

@@ -1,11 +1,13 @@
 # Application Tracker
 
-## REST API SD week 12 - July, 30th 2021
+## REST API SD week 12 - July, 30th 2021 - August 8,2021
 
 
 ## Overview
 * IMPORTANT: No auth/security is used. Please do not use real information. The information will not be secure.<br>
 This REST API is a program the does CRUD operations on applications, users, and contacts using a MySQL database and connecting with Spring Data JPA.
+
+This app will let you track your job applications as you apply.  You can also add contacts to each application and update/delete both as you go. 
 
 This is hosted at http://3.139.183.62:8080/JobApplicationTracker/
 
@@ -28,7 +30,7 @@ This is hosted at http://3.139.183.62:8080/JobApplicationTracker/
 | DEL    | `/api/applications/{appId}/contact/{contactId}` | | `void`| Delete contact from application|
 
 ### Technologies used
-* Java, Java Persistence API, REST API, Spring Boot, Gradle, MySQL Workbench, Postman, JSON, Tomcat
+* Java, Java Persistence API, REST API, Spring Boot, Gradle, MySQL Workbench, Postman, JSON, Tomcat, Javascript
 
 ### Lessons learned
 

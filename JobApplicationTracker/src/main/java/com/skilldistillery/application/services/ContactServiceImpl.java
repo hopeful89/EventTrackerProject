@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.application.entities.Application;
 import com.skilldistillery.application.entities.Contact;
+import com.skilldistillery.application.entities.User;
 import com.skilldistillery.application.repositories.ApplicationRepository;
 import com.skilldistillery.application.repositories.ContactRepository;
+import com.skilldistillery.application.repositories.UserRepository;
 
 @Service
 public class ContactServiceImpl implements ContactService {
@@ -18,16 +20,20 @@ public class ContactServiceImpl implements ContactService {
 	ContactRepository contactRepo;
 	@Autowired
 	ApplicationRepository appRepo;
+	@Autowired
+	UserRepository userRepo;
 
 	@Override
-	public List<Contact> findContactByApplicationId(int applicationId) {
-		return contactRepo.findByApplication_Id(applicationId);
+	public List<Contact> findContactByApplicationId(int applicationId, String username) {
+		
+		return contactRepo.findByApplication_IdAndApplication_User_username(applicationId, username);
 	}
 
 	@Override
-	public Contact updateContact(Contact contact, int appId) {
+	public Contact updateContact(Contact contact, int appId, String username) {
+		User user = userRepo.findByUsername(username);
 		Optional<Application> app = appRepo.findById(appId);
-		if(app.isPresent() && app.get().getContacts().contains(contact)) {
+		if(app.isPresent() && user.getApplications().contains(app.get()) && app.get().getContacts().contains(contact)) {
 			contact.setApplication(app.get());
 			contactRepo.saveAndFlush(contact);
 			return contact;
@@ -36,10 +42,11 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	public boolean deleteContact(int contactId, int appId) {
+	public boolean deleteContact(int contactId, int appId, String username) {
+		User user = userRepo.findByUsername(username);
 		Optional<Application> app = appRepo.findById(appId);
 		Optional<Contact> contact = contactRepo.findById(contactId);
-		if(app.isPresent() && app.get().getContacts().contains(contact.get())) {
+		if(app.isPresent() && user.getApplications().contains(app.get()) && app.get().getContacts().contains(contact.get())) {
 			contact.get().setApplication(null);
 			contactRepo.delete(contact.get());
 			return true;
@@ -48,9 +55,10 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	public Contact createContact(Contact contact, int appId) {
+	public Contact createContact(Contact contact, int appId, String username) {
+		User user = userRepo.findByUsername(username);
 		Optional<Application> app = appRepo.findById(appId);
-		if(app.isPresent()) {
+		if(app.isPresent() && user.getApplications().contains(app.get())) {
 			contact.setApplication(app.get());
 			contactRepo.saveAndFlush(contact);
 		}else {

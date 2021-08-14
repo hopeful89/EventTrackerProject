@@ -27,17 +27,17 @@ public class ApplicationServiceImpl implements ApplicationService{
 	ContactRepository contactRepo;
 
 	@Override
-	public List<Application> allApplications() {
-		return appRepo.findAll();
+	public Long allCount() {
+		return appRepo.count();
 	}
 
 	@Override
-	public Application createNewApplication(Application app, int userId) {
+	public Application createNewApplication(Application app, String username) {
 		
 		app.setStatus(statusRepo.getById(app.getStatus().getId()));
 		
 		try {
-			User user = userRepo.getById(userId);
+			User user = userRepo.findByUsername(username);
 			app.setUser(user);
 			appRepo.saveAndFlush(app);
 		} catch (Exception e) {
@@ -47,25 +47,29 @@ public class ApplicationServiceImpl implements ApplicationService{
 	}
 
 	@Override
-	public List<Application> findAllApplicationsByUserId(int userId) {
-		return appRepo.findByUser_Id(userId);
+	public List<Application> findAllApplicationsByUsername(String username) {
+		return appRepo.findByUser_username(username);
 	}
 
 	@Override
-	public Application findApplicationByUserAndAppId(int appId, int userId) {
-		Application app = appRepo.findByIdAndUser_id(appId, userId);
+	public Application findApplicationByUsernameAndAppId(int appId, String username) {
+		Application app = appRepo.findByIdAndUser_username(appId, username);
 		return app;
 	}
 
 	@Override
-	public Application updateApplication(int userId, Application application) {
-		Optional<User> user = userRepo.findById(userId);
+	public Application updateApplication(String username, Application application) {
+		User user = userRepo.findByUsername(username);
+		Optional<Application> app = appRepo.findById(application.getId());
 		if(application.getStatus() == null) {
 			application.setStatus(statusRepo.getById(1));
 		}
-		if(user.isPresent() && user.get().getApplications().contains(application)) {
+		if(user != null && user.getApplications().contains(application)) {
 			if(application.getUser() == null) {
-				application.setUser(user.get());
+				application.setUser(user);
+			}
+			if(application.getContacts() == null && app.get().getContacts() != null) {
+				application.setContacts(app.get().getContacts());
 			}
 			appRepo.saveAndFlush(application);
 			return application;
@@ -75,11 +79,11 @@ public class ApplicationServiceImpl implements ApplicationService{
 	}
 
 	@Override
-	public boolean deleteApplication(int userId, int appId) {
-		Optional<User> user = userRepo.findById(userId);
+	public boolean deleteApplication(int appId, String username) {
+		User user = userRepo.findByUsername(username);
 		Optional<Application> app = appRepo.findById(appId);
-		if(user.isPresent() && app.isPresent()) {
-			if(user.get().getApplications().contains(app.get())) {
+		if(user != null && app.isPresent()) {
+			if(user.getApplications().contains(app.get())) {
 				for(Contact contact : app.get().getContacts()) {
 					contactRepo.delete(contact);
 				}

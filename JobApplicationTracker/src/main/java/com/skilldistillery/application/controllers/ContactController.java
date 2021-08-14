@@ -1,5 +1,6 @@
 package com.skilldistillery.application.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.application.entities.Contact;
@@ -28,16 +28,16 @@ public class ContactController {
 	ContactService contactSvc;
 	
 	@GetMapping("applications/{appId}/contact")
-	public List<Contact> getContactByAppId(@PathVariable int appId){
+	public List<Contact> getContactByAppId(@PathVariable int appId, Principal principal){
 
-		return contactSvc.findContactByApplicationId(appId);
+		return contactSvc.findContactByApplicationId(appId, principal.getName());
 	}
 	
 	@PostMapping("applications/{appId}/contact")
-	public Contact createNewContact(@RequestBody Contact contact, @PathVariable int appId, HttpServletRequest req,HttpServletResponse res) {
+	public Contact createNewContact(@RequestBody Contact contact, @PathVariable int appId, HttpServletRequest req,HttpServletResponse res, Principal principal) {
 		Contact newContact;
 		try {
-			newContact = contactSvc.createContact(contact, appId);
+			newContact = contactSvc.createContact(contact, appId, principal.getName());
 			if(newContact == null) {
 				res.setStatus(404);
 				return newContact;
@@ -54,11 +54,11 @@ public class ContactController {
 	}
 	
 	@PutMapping("applications/{appId}/contact")
-	public Contact updateContactWithAppId(@PathVariable int appId, @RequestBody Contact contact,  HttpServletResponse res) {
+	public Contact updateContactWithAppId(@PathVariable int appId, @RequestBody Contact contact,  HttpServletResponse res, Principal principal) {
 		Contact newContact;
 
 		try {
-			newContact = contactSvc.updateContact(contact, appId);
+			newContact = contactSvc.updateContact(contact, appId, principal.getName());
 			if(newContact == null) {
 				res.setStatus(404);
 				return newContact;
@@ -71,10 +71,10 @@ public class ContactController {
 	}
 	
 	@DeleteMapping("applications/{appId}/contact/{contactId}")
-	public void deleteContactWithAppIdAndContactId(@PathVariable int appId, @PathVariable int contactId, HttpServletResponse res) {
+	public void deleteContactWithAppIdAndContactId(@PathVariable int appId, @PathVariable int contactId, HttpServletResponse res, Principal principal) {
 		Boolean isDeleted;
 		try {
-			isDeleted = contactSvc.deleteContact(contactId, appId);
+			isDeleted = contactSvc.deleteContact(contactId, appId, principal.getName());
 			if(isDeleted) {
 				res.setStatus(204);
 				return;

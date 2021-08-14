@@ -9,5 +9,5 @@ import com.skilldistillery.application.entities.User;
 
 
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
-	List<Contact> findByApplication_Id(int applicationId);
+	List<Contact> findByApplication_IdAndApplication_User_username(int applicationId, String username);
 }

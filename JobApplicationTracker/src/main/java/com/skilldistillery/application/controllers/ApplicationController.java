@@ -1,5 +1,6 @@
 package com.skilldistillery.application.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,14 +29,14 @@ public class ApplicationController {
 	private ApplicationService appSvc;
 	
 	@GetMapping("applications")
-	public List<Application> getAllApplications(){
-		return appSvc.allApplications();
+	public Long getAllApplicationsCount(){
+		return appSvc.allCount();
 	}
 	
-	@PostMapping("user/{userID}/applications")
-	public Application createNewUserApplication(@RequestBody Application app, @PathVariable int userID, HttpServletResponse res, HttpServletRequest req) {
+	@PostMapping("user/applications")
+	public Application createNewUserApplication(@RequestBody Application app, HttpServletResponse res, HttpServletRequest req, Principal principal) {
 
-		Application newApp = appSvc.createNewApplication(app, userID);
+		Application newApp = appSvc.createNewApplication(app, principal.getName());
 		if(newApp == null) {
 			res.setStatus(400);
 			return newApp;
@@ -47,14 +48,14 @@ public class ApplicationController {
 		return newApp;
 	}
 	
-	@GetMapping("user/{userId}/applications")
-	public List<Application> showApplicationsByUserId(@PathVariable int userId){
-		return appSvc.findAllApplicationsByUserId(userId);
+	@GetMapping("user/applications")
+	public List<Application> showApplicationsByUsername(Principal principal){
+		return appSvc.findAllApplicationsByUsername(principal.getName());
 	}
 	
-	@GetMapping("user/{userId}/applications/{appId}")
-	public Application showSingleApplication(@PathVariable int userId, @PathVariable int appId, HttpServletResponse res){
-		Application app = appSvc.findApplicationByUserAndAppId(appId, userId);
+	@GetMapping("user/applications/{appId}")
+	public Application showSingleApplication(@PathVariable int appId, HttpServletResponse res, Principal principal){
+		Application app = appSvc.findApplicationByUsernameAndAppId(appId, principal.getName());
 		if(app == null) {
 			res.setStatus(404);
 		}
@@ -62,9 +63,9 @@ public class ApplicationController {
 		return app;
 	}
 	
-	@PutMapping("user/{userId}/applications")
-	public Application updateApplication(@PathVariable int userId, @RequestBody Application app, HttpServletResponse res){
-		Application application = appSvc.updateApplication(userId, app);
+	@PutMapping("user/applications")
+	public Application updateApplication(@RequestBody Application app, HttpServletResponse res, Principal principal){
+		Application application = appSvc.updateApplication(principal.getName(), app);
 		if(app == null) {
 			res.setStatus(400);
 		}
@@ -72,14 +73,13 @@ public class ApplicationController {
 		return application;
 	}
 	
-	@DeleteMapping("user/{userId}/applications/{appId}")
-	public boolean deleteApplicationByUserAndAppId(@PathVariable int userId, @PathVariable int appId, HttpServletResponse res) {
-		boolean isDeleted = appSvc.deleteApplication(userId, appId);
+	@DeleteMapping("user/applications/{appId}")
+	public void deleteApplicationByUserAndAppId(@PathVariable int appId,Principal principal, HttpServletResponse res) {
+		boolean isDeleted = appSvc.deleteApplication(appId, principal.getName());
 		if(isDeleted) {
 			res.setStatus(204);
 		}else {
 			res.setStatus(404);
 		}
-		return isDeleted;
 	}
 }

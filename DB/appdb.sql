@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` VARCHAR(500) NOT NULL,
   `role` TINYINT NULL DEFAULT 0,
   `enabled` TINYINT NULL DEFAULT 1,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB;
 
 
@@ -140,7 +141,6 @@ COMMIT;
 START TRANSACTION;
 USE `appdb`;
 INSERT INTO `application` (`id`, `name`, `user_id`, `apply_date`, `deadline`, `link_to_job`, `description`, `location`, `salary`, `interview_date`, `job_title`, `status_id`) VALUES (1, 'Postman', 1, '2021-07-30', '2021-08-01', 'https://www.google.com', 'sweet', 'anyway', 120000, '2021-08-09', 'Developer', 1);
-INSERT INTO `application` (`id`, `name`, `user_id`, `apply_date`, `deadline`, `link_to_job`, `description`, `location`, `salary`, `interview_date`, `job_title`, `status_id`) VALUES (2, 'Google', 1, '2021-07-30', '2021-08-01', 'https://www.yahoo.com', 'short n ', 'anywhere you want', 3000000, NULL, 'Junior Dev', 1);
 
 COMMIT;
 

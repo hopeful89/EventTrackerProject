@@ -4,10 +4,9 @@
 
 
 ## Overview
-* IMPORTANT: No auth/security is used. Please do not use real information. The information will not be secure.<br>
-This REST API is a program the does CRUD operations on applications, users, and contacts using a MySQL database and connecting with Spring Data JPA.
+Tired of bloated job application tracking apps? Me too. I wanted a simple, lightweight, easy to use job application tracking app. You can see some basic metrics about the app on the home page, gain some knowledge on the about page, and track your jobs after you login.
 
-This app will let you track your job applications as you apply.  You can also add contacts to each application and update/delete both as you go.
+This REST API is a program the does CRUD operations on applications, users, and contacts using a MySQL database and connecting with Spring Data JPA/Hibernate.
 
 This is hosted at http://3.139.183.62:8080/JobApplicationTracker/
 
@@ -32,7 +31,7 @@ This is hosted at http://3.139.183.62:8080/JobApplicationTracker/
 | GET | api/applications | | long | total application count
 
 ### Technologies used
-* Java, Java Persistence API, REST API, Spring Boot, Gradle, MySQL Workbench, Postman, JSON, Tomcat, Javascript
+* Java, Java Persistence API, REST API, Spring Boot, Gradle, MySQL Workbench, Postman, JSON, Tomcat, Javascript, Angular, Bootstrap
 
 ### Lessons learned
 

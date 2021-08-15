@@ -1,0 +1,329 @@
+<div class="container mx-auto">
+  <div class="flex justify-center px-6 my-2">
+    <!-- Row -->
+    <div class="w-full xl:w-7/8 lg:w-11/12 flex shadow-lg">
+      <!-- Col -->
+      <div
+        class="p-2 w-full lg:w-3/4 bg-white md:p-5 rounded-lg lg:rounded-r-none"
+      >
+        <h3 class="pt-4 text-2xl text-center">Create Application</h3>
+        <form class="px-0 md:px-8 pt-6 pb-4 bg-white rounded">
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+              for="name"
+            >
+              Company Name
+            </label>
+            <input
+              class="
+                w-full
+                px-3
+                mb-1
+                py-2
+                text-sm
+                leading-tight
+                text-gray-700
+                border
+                rounded
+                shadow
+                appearance-none
+                focus:outline-none focus:shadow-outline
+              "
+              type="text"
+              name="name"
+              placeholder="Company Name"
+              [(ngModel)]="application.name"
+            />
+            <!-- <p class="text-xs italic text-red-500">Please enter your company name.</p> -->
+          </div>
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+              for="jobTitle"
+            >
+              Job Title
+            </label>
+            <input
+              class="
+                w-full
+                px-3
+                py-2
+                mb-1
+                text-sm
+                leading-tight
+                text-gray-700
+                border border-red-500
+                rounded
+                shadow
+                appearance-none
+                focus:outline-none focus:shadow-outline
+              "
+              type="text"
+              name="jobTitle"
+              placeholder="Job Title"
+              [(ngModel)]="application.jobTitle"
+            />
+            <!-- <p class="text-xs italic text-red-500">Please enter Job Title.</p> -->
+          </div>
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+              for="applyDate"
+            >
+              Apply Date
+            </label>
+            <input
+              class="
+                w-full
+                px-3
+                py-2
+                mb-1
+                text-sm
+                leading-tight
+                text-gray-700
+                border border-red-500
+                rounded
+                shadow
+                appearance-none
+                focus:outline-none focus:shadow-outline
+              "
+              type="date"
+              name="applyDate"
+              [(ngModel)]="application.applyDate"
+            />
+            <!-- <p class="text-xs italic text-red-500">Please enter Job Title.</p> -->
+          </div>
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+              for="deadline"
+            >
+              Deadline
+            </label>
+            <input
+              class="
+                w-full
+                px-3
+                py-2
+                mb-1
+                text-sm
+                leading-tight
+                text-gray-700
+                border border-red-500
+                rounded
+                shadow
+                appearance-none
+                focus:outline-none focus:shadow-outline
+              "
+              type="date"
+              name="deadline"
+              [(ngModel)]="application.deadline"
+            />
+            <!-- <p class="text-xs italic text-red-500">Please enter application deadline.</p> -->
+          </div>
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+              for="description"
+            >
+              Description
+            </label>
+            <input
+              class="
+                w-full
+                h-45
+                px-3
+                py-2
+                mb-1
+                text-sm
+                leading-tight
+                text-gray-700
+                border border-red-500
+                rounded
+                shadow
+                appearance-none
+                focus:outline-none focus:shadow-outline
+              "
+              [(ngModel)]="application.description"
+              type="text"
+              name="description"
+
+            />
+            <!-- <p class="text-xs italic text-red-500">Please enter link to job</p> -->
+          </div>
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+              for="salary"
+            >
+              Salary
+            </label>
+            <input
+              class="
+                w-full
+                px-3
+                py-2
+                mb-1
+                text-sm
+                leading-tight
+                text-gray-700
+                border border-red-500
+                rounded
+                shadow
+                appearance-none
+                focus:outline-none focus:shadow-outline
+              "
+              type="number"
+              name="salary"
+              [(ngModel)]="application.salary"
+            />
+            <!-- <p class="text-xs italic text-red-500">Please enter link to job</p> -->
+          </div>
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+              for="interviewDate"
+            >
+              Interview Date
+            </label>
+            <input
+              class="
+                w-full
+                px-3
+                py-2
+                mb-1
+                text-sm
+                leading-tight
+                text-gray-700
+                border border-red-500
+                rounded
+                shadow
+                appearance-none
+                focus:outline-none focus:shadow-outline
+              "
+              type="date"
+              name="interviewDate"
+              [(ngModel)]="application.interviewDate"
+            />
+            <!-- <p class="text-xs italic text-red-500">Please enter link to job</p> -->
+          </div>
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+              for="location"
+            >
+              Location
+            </label>
+            <input
+              class="
+                w-full
+                px-3
+                py-2
+                mb-1
+                text-sm
+                leading-tight
+                text-gray-700
+                border border-red-500
+                rounded
+                shadow
+                appearance-none
+                focus:outline-none focus:shadow-outline
+              "
+              type="text"
+              name="location"
+              [(ngModel)]="application.location"
+            />
+            <!-- <p class="text-xs italic text-red-500">Please enter link to job</p> -->
+          </div>
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+              for="linkToJob"
+            >
+              Link to Job
+            </label>
+            <input
+              class="
+                w-full
+                px-3
+                py-2
+                mb-1
+                text-sm
+                leading-tight
+                text-gray-700
+                border border-red-500
+                rounded
+                shadow
+                appearance-none
+                focus:outline-none focus:shadow-outline
+              "
+              type="text"
+              name="linkToJob"
+              [(ngModel)]="application.linkToJob"
+            />
+            <!-- <p class="text-xs italic text-red-500">Please enter link to job</p> -->
+          </div>
+          <div class="">
+            <label
+              class="block mb-2 text-sm font-bold text-gray-700"
+            for="sta"
+            >
+              Status
+            </label>
+            <div class="flex w-100 justify-between flex-wrap">
+              <div class="text-center">
+                <p>Not Started</p>
+                <input type="radio" name="status" value="1" [(ngModel)]="application.status.id">
+              </div>
+              <div class="text-center">
+                <p>Applied</p>
+                <input type="radio" name="status" value="2" [(ngModel)]="application.status.id">
+              </div>
+              <div class="text-center">
+                <p>Rejected</p>
+                <input type="radio" name="status" value="3" [(ngModel)]="application.status.id">
+              </div>
+              <div class="text-center">
+                <p>Offer</p>
+                <input type="radio" name="status" value="4" [(ngModel)]="application.status.id">
+              </div>
+              <div class="text-center">
+                <p>Accepted</p>
+                <input type="radio" name="status" value="5" [(ngModel)]="application.status.id">
+              </div>
+            </div>
+
+            <!-- <p class="text-xs italic text-red-500">Please enter link to job</p> -->
+          </div>
+          <div class="mt-2 text-center">
+            <button
+            (click)="createApp()"
+              class="
+                w-1/2
+                px-4
+                py-2
+                font-bold
+                text-white
+                bg-blue-500
+                rounded-full
+                hover:bg-blue-700
+                focus:outline-none focus:shadow-outline
+              "
+              type="button"
+            >
+              Create Application
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- Col -->
+      <div
+        class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/4 bg-cover"
+        style="
+          background-image: url('https://source.unsplash.com/600x800/?nature,water');
+        "
+      ></div>
+    </div>
+  </div>
+</div>

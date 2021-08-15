@@ -1,3 +1,80 @@
-<ul>
-  <li *ngFor="let app of applications">{{app | json}}</li>
-</ul>
+<div class="container mt-4 mx-auto">
+  <div class="text-center">
+    <button [routerLink]="['/createapp']" class="shadow bg-blue-400 hover:bg-blue-600 font-thin text-white w-52 p-3 m-1">New Application</button>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2">
+    <div class="m-1">
+      <label for="status">Filter: </label>
+      <select class="h-8 w-100 shadow-sm" name="status" id="">
+        <option value="">Not started</option>
+      </select>
+    </div>
+    <div class="m-1">
+      <label for="search "> Search:</label>
+      <input class="shadow-sm h-8 w-100" type="text" name="search" />
+    </div>
+
+
+  </div>
+  <div class="grid p-0 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div *ngFor="let app of applications">
+      <div
+        class="
+          card
+          cursor-pointer
+          md:m-1
+          mt-1
+          border border-gray-400
+          rounded-lg
+          hover:shadow-md hover:border-opacity-0
+          transform
+          hover:-translate-y-1
+          transition-all
+          duration-200
+        "
+      >
+        <div class="m-3">
+          <h2 class="text-lg mb-2">
+            {{ app.name }}
+            <span
+              class="
+                text-sm text-teal-800
+                font-mono
+                bg-red-100
+                inline
+                rounded-full
+                px-2
+                align-top
+                float-right
+                animate-pulse
+              "
+              >{{ app.status.name }}</span
+            >
+          </h2>
+          <div
+            class="
+              font-light font-mono
+              text-sm text-gray-700
+              hover:text-gray-900
+              transition-all
+              duration-200
+            "
+          >
+            <div class="flex justify-between">
+              <p class="font-bold">Title:</p>
+              <p>{{ app.jobTitle }}</p>
+            </div>
+            <div class="flex justify-between">
+              <p class="font-bold">Salary:</p>
+              <p>{{ app.salary }}</p>
+            </div>
+            <div class="flex justify-between">
+              <p class="font-bold">Deadline:</p>
+              <p>{{ app.deadline | date: "dd/MM/yyyy" }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

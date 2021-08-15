@@ -1,7 +1,6 @@
 package com.skilldistillery.application.controllers;
 
 import java.security.Principal;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.application.entities.User;
 import com.skilldistillery.application.services.UserService;
-@CrossOrigin({"*", "http:localhost:4203"})
+@CrossOrigin({"*", "http:localhost:4200"})
 @RestController
 @RequestMapping("api")
 public class UserController {

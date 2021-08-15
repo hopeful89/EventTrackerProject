@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class User {
@@ -24,7 +23,7 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<Application> applications;
-	
+	private String email;
 	public User() {
 	}
 
@@ -96,6 +95,14 @@ public class User {
 
 	public void setApplications(List<Application> applications) {
 		this.applications = applications;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 

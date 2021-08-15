@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.application.entities.Contact;
 import com.skilldistillery.application.services.ContactService;
-@CrossOrigin({"*", "http:localhost:4203"})
+@CrossOrigin({"*", "http:localhost:4200"})
 @RestController
 @RequestMapping("api")
 public class ContactController {

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skilldistillery.application.entities.Application;
 import com.skilldistillery.application.services.ApplicationService;
 
-@CrossOrigin({"*", "http:localhost:4203"})
+@CrossOrigin({"*", "http:localhost:4205"})
 @RestController
 @RequestMapping("api")
 public class ApplicationController {
@@ -35,7 +35,8 @@ public class ApplicationController {
 	
 	@PostMapping("user/applications")
 	public Application createNewUserApplication(@RequestBody Application app, HttpServletResponse res, HttpServletRequest req, Principal principal) {
-
+		System.out.println(app);
+		System.out.println("**********************");
 		Application newApp = appSvc.createNewApplication(app, principal.getName());
 		if(newApp == null) {
 			res.setStatus(400);

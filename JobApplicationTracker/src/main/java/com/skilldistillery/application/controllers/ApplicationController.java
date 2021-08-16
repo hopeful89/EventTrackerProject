@@ -28,10 +28,7 @@ public class ApplicationController {
 	@Autowired
 	private ApplicationService appSvc;
 	
-	@GetMapping("applications")
-	public Long getAllApplicationsCount(){
-		return appSvc.allCount();
-	}
+
 	
 	@PostMapping("user/applications")
 	public Application createNewUserApplication(@RequestBody Application app, HttpServletResponse res, HttpServletRequest req, Principal principal) {

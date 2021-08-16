@@ -33,6 +33,7 @@ export class ApplicationListComponent implements OnInit {
       return app.status.name === event.target.value
     });
     this.appView = this.filteredApp.map(x => x);
+    this.search ='';
   }
 
   loadApplications() {

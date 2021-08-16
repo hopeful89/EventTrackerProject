@@ -16,7 +16,7 @@
     </div>
     <div class="m-1">
       <label for="search "> Search:</label>
-      <input (keyup)="searchFilter($event)" class="form-control shadow-sm h-8 w-100" type="text" name="search"/>
+      <input (keyup)="searchFilter($event)" [value]="search" class="form-control shadow-sm h-8 w-100" type="text" name="search"/>
     </div>
 
 

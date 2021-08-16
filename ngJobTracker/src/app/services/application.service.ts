@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Application } from '../models/application';
 import { AuthService } from './auth.service';
 
@@ -9,7 +10,8 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class ApplicationService {
-  baseUrl = 'http://localhost:8084/';
+  // baseUrl = 'http://localhost:8084/';//local
+  baseUrl = environment.baseUrl;
   url = `${this.baseUrl}api/user/applications`;
 
   constructor(private http: HttpClient, private auth: AuthService) { }

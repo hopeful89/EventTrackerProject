@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationService } from 'src/app/services/application.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,13 +11,17 @@ import { UserService } from 'src/app/services/user.service';
 export class HomeComponent implements OnInit {
   userCount: any = 0;
   appCount: any = 0;
-  constructor(private userSvc: UserService, private appSvc:ApplicationService) {
+  constructor(private userSvc: UserService, private appSvc:ApplicationService, private auth: AuthService) {
 
   }
 
   ngOnInit(): void {
     this.getUserCount();
     this.getAppCount();
+  }
+
+  loggedIn(){
+    return this.auth.checkLogin();
   }
 
   getAppCount(){

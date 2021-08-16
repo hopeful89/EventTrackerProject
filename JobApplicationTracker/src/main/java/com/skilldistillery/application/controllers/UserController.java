@@ -22,11 +22,7 @@ public class UserController {
 	@Autowired
 	private UserService userSvc;
 	
-	@GetMapping("user")
-	public long getAllUsers(){
-		return userSvc.getAllUsersCount();
-	}
-	
+
 	
 	@PutMapping("user")
 	public User updateUser(@RequestBody User user, HttpServletResponse res, Principal principal) {

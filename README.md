@@ -1,6 +1,6 @@
 # Application Tracker
 
-## REST API SD week 12 - July, 30th 2021 - August 8,2021
+## REST API SD week 12 - July, 30th 2021 - August 16,2021
 
 
 ## Overview
@@ -31,8 +31,10 @@ This is hosted at http://3.139.183.62:8080/JobApplicationTracker/
 | GET | api/applications | | long | total application count
 
 ### Technologies used
-* Java, Java Persistence API, REST API, Spring Boot, Gradle, MySQL Workbench, Postman, JSON, Tomcat, Javascript, Angular, Bootstrap
+* Java, Java Persistence API, REST API, Spring Boot, Gradle, MySQL Workbench, Postman, JSON, Tomcat, Javascript, Typescript, Angular, Tailwind CSS
 
 ### Lessons learned
 
 This project just enforced even more than I cant memorize everything.  Reference material is golden for when you miss one small step.  Creation of a JPA/Boot project still seems robust but it is getting easier. I was able to learn to use the MySQL workbench better, continue solidifying entity mapping, and learned something new about hibernate and lazy initialization that Eagerly fetching doesn't fix.  This project was great practice for all the annotations.  
+
+The angular front end took way more time than I thought it would.  I got to learn about responsive web design, tailwind css, and a host of issues that come from typescript. Overall I learned a lot from angular especially event bindings and model bindings.

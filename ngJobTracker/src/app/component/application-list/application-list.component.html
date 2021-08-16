@@ -17,7 +17,7 @@
 
   </div>
   <div class="grid p-0 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-    <div *ngFor="let app of applications">
+    <div *ngFor="let app of applications" (click)="clickToSinglePage(app)">
       <div
         class="
           card

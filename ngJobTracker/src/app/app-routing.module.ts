@@ -7,6 +7,9 @@ import { LoginComponent } from './component/login/login.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { SignupComponent } from './component/signup/signup.component';
+import { SingleappComponent } from './component/singleapp/singleapp.component';
+import { UpdateAppComponent } from './component/update-app/update-app.component';
+
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -17,10 +20,12 @@ const routes: Routes = [
   { path: 'logout', component:  HomeComponent},
   { path: 'createapp', component:  CreateappComponent},
   { path: 'application', component:  ApplicationListComponent},
+  { path: 'application/:appid', component:  SingleappComponent},
+  { path: 'application/:appid/update', component: UpdateAppComponent},
   { path: '**', component: NotFoundComponent },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

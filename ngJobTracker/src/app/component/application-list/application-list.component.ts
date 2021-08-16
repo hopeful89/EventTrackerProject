@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Application } from 'src/app/models/application';
 import { ApplicationService } from 'src/app/services/application.service';
 
@@ -10,7 +11,7 @@ import { ApplicationService } from 'src/app/services/application.service';
 export class ApplicationListComponent implements OnInit {
 
   applications: Application[] = [];
-  constructor(private appService:ApplicationService) { }
+  constructor(private appService:ApplicationService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadApplications();
@@ -25,6 +26,10 @@ export class ApplicationListComponent implements OnInit {
         console.error('ApplicationListComponent: error loadings applications')
       }
     )
+  }
+
+  clickToSinglePage(app: Application){
+    this.router.navigateByUrl(`/application/${app.id}`);
   }
 
 }

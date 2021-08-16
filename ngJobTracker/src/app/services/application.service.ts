@@ -34,10 +34,38 @@ export class ApplicationService {
        })
     )
   }
+
+  singleApp(id:number):Observable<Application>{
+    return this.http.get<Application>(`${this.url}/${id}`, this.getHttpOptions()).pipe(
+       catchError((err:any) => {
+         console.error(`Application.singleApp(): error getting single application`)
+         return throwError(err);
+       })
+    )
+  }
+
   create(app:Application):Observable<Application>{
     return this.http.post<Application>(this.url, app, this.getHttpOptions()).pipe(
        catchError((err:any) => {
-         console.error(`Application.index(): error getting applications`)
+         console.error(`Application.create(): error creating application`)
+         return throwError(err);
+       })
+    )
+  }
+
+  update(app:Application):Observable<Application>{
+    return this.http.put<Application>(this.url, app, this.getHttpOptions()).pipe(
+       catchError((err:any) => {
+         console.error(`Application.update: error updaintg application`)
+         return throwError(err);
+       })
+    )
+  }
+
+  delete(id:number){
+    return this.http.delete<Application>(`${this.url}/${id}`, this.getHttpOptions()).pipe(
+       catchError((err:any) => {
+         console.error(`Application.delete(): error deleting application`)
          return throwError(err);
        })
     )

@@ -1,3 +1,4 @@
+import { Contact } from "./contact";
 import { Status } from "./status";
 
 export class Application {
@@ -5,15 +6,16 @@ export class Application {
   id: number;
   name: string;
   userId: number;
-  applyDate: string | null;
-  deadline: string  | null;
+  applyDate?: string;
+  deadline?: string;
   linkToJob: string;
   description: string;
   location: string;
   salary: number;
-  interviewDate: string | null;
+  interviewDate?: string;
   jobTitle: string;
   status: Status;
+  contacts: Contact[];
 
   constructor(
     id: number = 0,
@@ -27,7 +29,8 @@ export class Application {
     salary: number = 0,
     interviewDate: string = '',
     jobTitle: string = '',
-    status: Status = new Status()
+    status: Status = new Status(),
+    contacts:Contact[] = []
   ) {
     this.id = id;
     this.name = name;
@@ -41,6 +44,7 @@ export class Application {
     this.interviewDate = interviewDate,
     this.jobTitle = jobTitle,
     this.status = status;
+    this.contacts = contacts;
   }
 
 

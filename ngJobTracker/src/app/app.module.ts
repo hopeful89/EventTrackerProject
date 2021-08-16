@@ -17,6 +17,9 @@ import { ProfileComponent } from './component/profile/profile.component';
 import { LogoutComponent } from './component/logout/logout.component';
 import { MenutoggleService } from './services/menutoggle.service';
 import { CreateappComponent } from './component/createapp/createapp.component';
+import { SingleappComponent } from './component/singleapp/singleapp.component';
+import { UpdateAppComponent } from './component/update-app/update-app.component';
+
 
 
 @NgModule({
@@ -31,6 +34,8 @@ import { CreateappComponent } from './component/createapp/createapp.component';
     ProfileComponent,
     LogoutComponent,
     CreateappComponent,
+    SingleappComponent,
+    UpdateAppComponent
   ],
   imports: [
     BrowserModule,

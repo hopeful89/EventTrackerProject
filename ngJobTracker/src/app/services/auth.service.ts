@@ -23,8 +23,7 @@ export class AuthService {
         'Authorization': `Basic ${credentials}`
       })
     };
-    console.log(username, password);
-    console.log(httpOptions);
+
     // create request to authenticate credentials
     return this.http
       .get(this.baseUrl + 'login', httpOptions)

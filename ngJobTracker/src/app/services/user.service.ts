@@ -26,7 +26,7 @@ export class UserService {
   }
 
   count(){
-    return this.http.get(this.url, this.getHttpOptions()).pipe(
+    return this.http.get(`${this.baseUrl}users`).pipe(
        catchError((err:any) => {
          console.error(`user.count(): error getting users`)
          return throwError(err);

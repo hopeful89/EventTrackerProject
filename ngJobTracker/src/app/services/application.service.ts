@@ -35,7 +35,7 @@ export class ApplicationService {
     )
   }
   count(){
-    return this.http.get(`${this.baseUrl}api/applications`, this.getHttpOptions()).pipe(
+    return this.http.get(`${this.baseUrl}applications`).pipe(
        catchError((err:any) => {
          console.error(`Application.count(): error getting applications`)
          return throwError(err);

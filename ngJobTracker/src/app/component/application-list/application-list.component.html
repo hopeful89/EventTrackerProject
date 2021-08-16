@@ -5,8 +5,13 @@
   <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="m-1">
       <label for="status">Filter: </label>
-      <select class="h-8 w-100 shadow-sm" name="status" id="">
-        <option value="">Not started</option>
+      <select (change)="filterByStatus($event)" class="h-8 w-100 shadow-sm" name="status" id="">
+        <option value="">View All</option>
+        <option value="Not Started">Not started</option>
+        <option value="Applied">Applied</option>
+        <option value="Rejected">Rejected</option>
+        <option value="Offer">Offer</option>
+        <option value="Accepted">Accepted</option>
       </select>
     </div>
     <div class="m-1">
@@ -70,7 +75,7 @@
             </div>
             <div class="flex justify-between">
               <p class="font-bold">Deadline:</p>
-              <p>{{ app.deadline | date: "dd/MM/yyyy" }}</p>
+              <p>{{ app.deadline | date: "MM/dd/yyyy" }}</p>
             </div>
           </div>
         </div>

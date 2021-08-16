@@ -28,7 +28,21 @@ export class UpdateAppComponent implements OnInit {
       }
     )
   }
+
+  removeEmpty(){
+    if(!this.application.deadline){
+      delete this.application.deadline
+    }
+    if(!this.application.applyDate){
+      delete this.application.applyDate
+    }
+    if(!this.application.interviewDate){
+      delete this.application.interviewDate
+    }
+  }
+
   update(){
+    this.removeEmpty();
     this.appSvc.update(this.application).subscribe(
       res=>{
         this.router.navigateByUrl(`application/${this.application.id}`);

@@ -12,15 +12,22 @@ export class ApplicationListComponent implements OnInit {
 
   applications: Application[] = [];
   constructor(private appService:ApplicationService, private router: Router) { }
-
+  appView: Application[] = [];
+  search: string = '';
   ngOnInit(): void {
     this.loadApplications();
+  }
+
+  searchFilter(event:any){
+    this.search = event.target.value;
+    this.appView = this.applications.filter(app => app.name.toUpperCase().includes(this.search.toUpperCase()) || app.description.toUpperCase().includes(this.search.toUpperCase()));
   }
 
   loadApplications() {
     this.appService.index().subscribe(
       res=>{
         this.applications = res;
+        this.appView = this.applications.map(x => x);
       },
       error=>{
         console.error('ApplicationListComponent: error loadings applications')

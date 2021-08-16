@@ -34,6 +34,14 @@ export class ApplicationService {
        })
     )
   }
+  count(){
+    return this.http.get(`${this.baseUrl}api/applications`, this.getHttpOptions()).pipe(
+       catchError((err:any) => {
+         console.error(`Application.count(): error getting applications`)
+         return throwError(err);
+       })
+    )
+  }
 
   singleApp(id:number):Observable<Application>{
     return this.http.get<Application>(`${this.url}/${id}`, this.getHttpOptions()).pipe(

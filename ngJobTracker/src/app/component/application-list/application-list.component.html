@@ -11,13 +11,13 @@
     </div>
     <div class="m-1">
       <label for="search "> Search:</label>
-      <input class="shadow-sm h-8 w-100" type="text" name="search" />
+      <input (keyup)="searchFilter($event)" class="form-control shadow-sm h-8 w-100" type="text" name="search"/>
     </div>
 
 
   </div>
   <div class="grid p-0 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-    <div *ngFor="let app of applications" (click)="clickToSinglePage(app)">
+    <div *ngFor="let app of appView" (click)="clickToSinglePage(app)">
       <div
         class="
           card

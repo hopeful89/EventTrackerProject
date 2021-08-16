@@ -1,7 +1,7 @@
 <nav class="relative flex flex-wrap items-center justify-between px-2 py-3 bg-blue-500">
   <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
     <div class="w-full relative flex justify-between lg:w-auto  px-4 lg:static lg:block lg:justify-start">
-      <a class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white" [routerLink]="['/home']">
+      <a class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white" href="#pablo">
         App Tracker
       </a>
       <button class="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none" type="button" (click)="toggleNavbar()">
@@ -10,27 +10,27 @@
     </div>
     <div [ngClass]="{'hidden': !showMenuToogle, 'flex': showMenuToogle}" class="lg:flex lg:flex-grow items-center">
       <ul class="flex flex-col lg:flex-row list-none ml-auto">
-        <li [ngClass]="!loggedin() ? 'hidden' : 'nav-item'" class="nav-item">
+        <li class="nav-item">
           <a (click)="toggleNavbar()" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" [routerLink]="['/application']">
             Applications
           </a>
         </li>
-        <li [ngClass]="!loggedin() ? 'hidden' : 'nav-item'">
+        <li class="nav-item">
           <a (click)="toggleNavbar()" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" [routerLink]="['/profile']">
             Profile
           </a>
         </li>
-        <li [ngClass]="loggedin() ? 'hidden' : 'nav-item'">
+        <li class="nav-item">
           <a (click)="toggleNavbar()" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" [routerLink]="['/signup']">
             Signup
           </a>
         </li>
-        <li [ngClass]="loggedin() ? 'hidden' : 'nav-item'">
+        <li class="nav-item">
           <a (click)="toggleNavbar()" class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" [routerLink]="['/login']">
             Login
           </a>
         </li>
-        <app-logout [ngClass]="!loggedin() ? 'hidden' : 'nav-item'"></app-logout>
+        <app-logout></app-logout>
       </ul>
     </div>
   </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { MenutoggleService } from 'src/app/services/menutoggle.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { MenutoggleService } from 'src/app/services/menutoggle.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private menuToggle: MenutoggleService) {
+  constructor(private menuToggle: MenutoggleService, private auth: AuthService) {
    }
 
   ngOnInit(): void {
@@ -20,6 +21,10 @@ export class NavbarComponent implements OnInit {
 
   public get showMenuToogle() : boolean {
     return this.menuToggle.showMenu;
+  }
+
+  loggedin():boolean{
+    return this.auth.checkLogin();
   }
 
 }

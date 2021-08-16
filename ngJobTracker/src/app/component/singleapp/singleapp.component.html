@@ -86,16 +86,16 @@
               <div class="space-y-2  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   <div class="text-center border-2 p-2 m-1 bg-gray-50 rounded flex flex-column hover:bg-gray-100" *ngFor="let contact of app.contacts">
                       <div class="">
-                          <h1 class="font-bold text-sm">{{contact.firstName}} {{contact.lastName}}</h1>
-                          <p>{{contact.email}}</p>
+                          <h1 class="font-bold ">{{contact.firstName}} {{contact.lastName}}</h1>
+                          <p class="overflow-x-hidden text-sm">{{contact.email}}</p>
                           <p>{{contact.phoneNumber}}</p>
                       </div>
                       <div class="grid grid-cols-2 mt-2">
                         <div >
-                          <button class="border p-1 w-20 shadow shadow-outline rounded bg-blue-500 text-white hover:bg-blue-600 hover:text-white">edit</button>
+                          <button (click)="toggleEditModal(contact)" class="border p-1 w-20 shadow shadow-outline rounded bg-blue-500 text-white hover:bg-blue-600 hover:text-white">edit</button>
                         </div>
                         <div>
-                          <button class="border p-1 w-20 shadow shadow-outline rounded bg-red-500 hover:bg-red-600 text-white">delete</button>
+                          <button (click)="deleteContact(contact.id)" class="border p-1 w-20 shadow shadow-outline rounded bg-red-500 hover:bg-red-600 text-white">delete</button>
                         </div>
                       </div>
                   </div>
@@ -106,16 +106,16 @@
 </div>
 
 <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-  <div class="relative w-auto my-6 mx-auto max-w-3xl">
+  <div class="relative w-auto mx-auto max-w-3xl">
     <!--content-->
     <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
       <!--header-->
-      <div class="flex items-start  text-center justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+      <div class="flex items-start  text-center justify-between p-2 border-b border-solid border-blueGray-200 rounded-t">
         <h3 class="text-3xl font-semibold">
           Create a contact
         </h3>
-        <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
-          <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+        <button class="p-1 ml-auto text-red border-0 text-black opacity-5 float-right text-3xl" (click)="toggleModal()">
+          <span class="h-6 w-6 text-2xl block outline-none focus:outline-none">
             ×
           </span>
         </button>
@@ -130,17 +130,47 @@
             class="w-full px-3 mb-1 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             type="text"
             name="firstName"
-            placeholder="Username"
+            placeholder="First Name"
             [(ngModel)]="contact.firstName"
+          />
+          <label class="block mb-2 text-sm font-bold text-gray-700" for="lastName">
+            Last Name
+          </label>
+          <input
+            class="w-full px-3 mb-1 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            [(ngModel)]="contact.lastName"
+          />
+          <label class="block mb-2 text-sm font-bold text-gray-700" for="email">
+            Email
+          </label>
+          <input
+            class="w-full px-3 mb-1 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            type="email"
+            name="email"
+            placeholder="email"
+            [(ngModel)]="contact.email"
+          />
+          <label class="block mb-2 text-sm font-bold text-gray-700" for="phoneNumber">
+            Phone number
+          </label>
+          <input
+            class="w-full px-3 mb-1 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            type="tel"
+            name="phoneNumber"
+            placeholder="Phone number"
+            [(ngModel)]="contact.phoneNumber"
           />
         </form>
       </div>
       <!--footer-->
-      <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-        <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
+      <div class="flex items-center justify-end border-t border-solid border-blueGray-200 rounded-b">
+        <button (click)="clear()" class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
           Close
         </button>
-        <button class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
+        <button (click)="createContact()" class="bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-3 mt-1 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
           Save Changes
         </button>
       </div>
@@ -148,3 +178,78 @@
   </div>
 </div>
 <div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+
+<div *ngIf="showEditModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto mx-auto max-w-3xl">
+    <!--content-->
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+      <!--header-->
+      <div class="flex items-start  text-center justify-between p-2 border-b border-solid border-blueGray-200 rounded-t">
+        <h3 class="text-3xl font-semibold">
+          Update a contact
+        </h3>
+        <button class="p-1 ml-auto text-red border-0 text-black opacity-5 float-right text-3xl" (click)="toggleEditModal()">
+          <span class="h-6 w-6 text-2xl block outline-none focus:outline-none">
+            ×
+          </span>
+        </button>
+      </div>
+      <!--body-->
+      <div class="relative p-6 flex-auto">
+        <form>
+          <label class="block mb-2 text-sm font-bold text-gray-700" for="firstName">
+            First Name
+          </label>
+          <input
+            class="w-full px-3 mb-1 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            [(ngModel)]="contact.firstName"
+          />
+          <label class="block mb-2 text-sm font-bold text-gray-700" for="lastName">
+            Last Name
+          </label>
+          <input
+            class="w-full px-3 mb-1 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            [(ngModel)]="contact.lastName"
+          />
+          <label class="block mb-2 text-sm font-bold text-gray-700" for="email">
+            Email
+          </label>
+          <input
+            class="w-full px-3 mb-1 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            type="email"
+            name="email"
+            placeholder="email"
+            [(ngModel)]="contact.email"
+          />
+          <label class="block mb-2 text-sm font-bold text-gray-700" for="phoneNumber">
+            Phone number
+          </label>
+          <input
+            class="w-full px-3 mb-1 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            type="tel"
+            name="phoneNumber"
+            placeholder="Phone number"
+            [(ngModel)]="contact.phoneNumber"
+          />
+        </form>
+      </div>
+      <!--footer-->
+      <div class="flex items-center justify-end border-t border-solid border-blueGray-200 rounded-b">
+        <button (click)="toggleEditModal()" class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
+          Close
+        </button>
+        <button (click)="updateContact()" class="bg-blue-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-3 mt-1 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showEditModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
